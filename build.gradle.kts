@@ -1,64 +1,59 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.22"
-    id("org.jetbrains.intellij.platform") version "2.1.0"
+    id("org.jetbrains.kotlin.jvm") version "2.0.21"
+    // Используем самую новую систему сборки плагинов
+    id("org.jetbrains.intellij.platform") version "2.2.1"
 }
 
-group = "com.deepseek.android"
-version = "1.2.3-K2-BYPASS-FINAL"
+group = "com.deepseek.androidstudio"
+version = "0.2.0-windows"
 
 repositories {
     mavenCentral()
+    google()
     intellijPlatform {
         defaultRepositories()
     }
 }
 
 dependencies {
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    
     intellijPlatform {
-        create("IC", "2023.3.6")
-        bundledPlugin("com.intellij.java")
-        bundledPlugin("org.jetbrains.kotlin")
+        // Указываем сборку под Android Studio Ladybug
+        androidStudio("2024.2.1") 
+
+        // Подключаем встроенные плагины, чтобы иметь доступ к классам Android и Java
+        plugin("com.intellij.java")
+        plugin("org.jetbrains.android")
+
         instrumentationTools()
     }
+
+    // Зависимости для работы с API DeepSeek и локальной БД (из ТЗ)
+    implementation("org.xerial:sqlite-jdbc:3.45.1.0")
+    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp-sse:4.12.0") // Для стриминга ответа
 }
 
-kotlin {
-    jvmToolchain(17)
-}
-
+// Настройка версий IDE, в которых будет работать плагин
 intellijPlatform {
     pluginConfiguration {
-        id.set("com.deepseek.android")
-        name.set("DeepSeek Android Assistant")
-        vendor {
-            name.set("DeepSeek")
-        }
-        
         ideaVersion {
-            sinceBuild.set("233")
-            untilBuild.set("255.*")
+            sinceBuild.set("242")   // Начиная с Ladybug
+            untilBuild.set("252.*") // Заканчивая версиями до Narwhal
         }
     }
 }
 
+// Принудительно задаем Java 17 (требование современных версий AS)
 tasks {
-    register<Copy>("copyPluginToRelease") {
-        dependsOn("buildPlugin")
-        
-        from(layout.buildDirectory.dir("distributions"))
-        include("*.zip")
-        into(layout.projectDirectory.dir("release"))
-        
-        doLast {
-            println("✅ Плагин готов для установки!")
-        }
+    withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
-    
-    // Отключаем проблемную задачу
-    named("buildSearchableOptions") {
-        enabled = false
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 }
