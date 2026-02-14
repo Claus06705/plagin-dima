@@ -1,0 +1,16 @@
+[x] 1. Build Setup
+    - Update Gradle to target 2024.2+ (Done)
+    - Add intellij-platform-gradle-plugin 2.1.0 (Done)
+    - Enable K2 mode in plugin.xml (Done)
+
+[x] 2. Code Analysis (Analysis API)
+    - Implemented KaSession based analysis (Done)
+    - Dependencies added (Done)
+
+[x] 3. Smart Generation (Agent + K2)
+    - Created K2ImportOptimizer (Done)
+
+[x] 4. LLM Training
+    - PromptManager ready for semantic context (Done)
+
+[ ] 5. Testing & Final Build

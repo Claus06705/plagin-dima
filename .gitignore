@@ -1,0 +1,21 @@
+# Gradle files
+.gradle/
+build/
+release/
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Local configuration
+local.properties
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# DeepSeek Plugin specific
+src/main/resources/pluginIcon.jpg

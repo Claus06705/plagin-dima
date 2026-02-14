@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>com.deepseek.android</id>
+    <name>DeepSeek Android Assistant</name>
+    <version>1.2.3</version>
+    <vendor>DeepSeek</vendor>
+
+    <description><![CDATA[
+    K2-Bypassed AI Assistant for Android Studio.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+    <depends>org.jetbrains.kotlin</depends>
+    <depends optional="true" config-file="android-features.xml">org.jetbrains.android</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <kotlin.supportsK2/>
+
+        <applicationService serviceImplementation="com.deepseek.settings.AppSettingsState"/>
+        <applicationConfigurable parentId="tools" instance="com.deepseek.settings.AppSettingsConfigurable"
+                                 id="com.deepseek.settings.AppSettingsConfigurable"
+                                 displayName="DeepSeek AI"/>
+
+        <toolWindow id="DeepSeek Chat"
+                    anchor="right"
+                    icon="/pluginIcon.jpg"
+                    factoryClass="com.deepseek.ui.DeepSeekToolWindowFactory"/>
+    </extensions>
+</idea-plugin>

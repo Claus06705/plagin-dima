@@ -1,0 +1,10 @@
+<ivy-module version="2.0">
+  <info organisation="localIde" module="IC" revision="242.21829.142+449"/>
+  <configurations>
+    <conf name="default" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="/PLAGINY/ideaIC-2024.2.1.win" type="directory" conf="default"/>
+  </publications>
+  <dependencies/>
+</ivy-module>
