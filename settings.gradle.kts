@@ -1,3 +1,5 @@
+rootProject.name = "plagin-dima"
+
 pluginManagement {
     repositories {
         mavenCentral()
@@ -5,8 +7,12 @@ pluginManagement {
     }
 }
 
-plugins {
-    id("org.jetbrains.intellij.platform") version "2.1.0" apply false
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        google() // Обязательно для Android-зависимостей
+        intellijPlatform {
+            defaultRepositories() // Магия JetBrains: отсюда скачается Android Studio
+        }
+    }
 }
-
-rootProject.name = "plagin-dima"
